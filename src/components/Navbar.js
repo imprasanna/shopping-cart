@@ -6,7 +6,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -18,7 +18,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Navbar = () => {
-  // let { productCount } = useSelector((state) => state.product.cart);
+  let { cartsCount } = useSelector((state) => state.cart);
 
   return (
     <Paper
@@ -55,7 +55,7 @@ const Navbar = () => {
         style={{ display: "flex", alignItems: "center", paddingRight: "8rem" }}
       >
         <IconButton aria-label="cart">
-          <StyledBadge badgeContent={1} color="success">
+          <StyledBadge badgeContent={cartsCount} color="success">
             <ShoppingCartIcon sx={{ fontSize: "2.5rem" }} />
           </StyledBadge>
         </IconButton>

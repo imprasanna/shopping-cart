@@ -3,24 +3,21 @@ import { Paper, Button } from "@mui/material";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/slices/CartSlice";
-import { useParams } from "react-router-dom";
+import { products } from "../utilities/constants";
+// import { useParams } from "react-router-dom";
 
 const IndividaulProduct = () => {
-  let { productId } = useParams();
-  let { carts, productsShow } = useSelector((state) => state.cart);
+  // let { productId } = useParams();
+  let { productsShow } = useSelector((state) => state.cart);
   // const product = products.find((product) => product.id === productId);
 
   let dispatch = useDispatch();
 
-  const handleAddToCart = (event, id, name, image, price) => {
+  const handleAddToCart = (event, id) => {
     event.stopPropagation();
-    // const productKey = carts.find((cart) => cart.id === id);
-    // console.log(productKey);
-    if (productsShow) {
-      alert("Item already present!");
-    } else {
-      dispatch(addToCart([id, name, image, price]));
-    }
+    const productObj = products.find((product) => product.id === id);
+    console.log(productObj);
+    dispatch(addToCart(productObj));
   };
 
   return (
@@ -56,15 +53,7 @@ const IndividaulProduct = () => {
             </div>
             <Button
               variant="contained"
-              onClick={(event, products) =>
-                handleAddToCart(
-                  event,
-                  products.id,
-                  products.name,
-                  products.img,
-                  products.price
-                )
-              }
+              onClick={(event) => handleAddToCart(event, productsShow.id)}
             >
               Add to cart
             </Button>
