@@ -34,8 +34,9 @@ const AllProducts = () => {
     setCurrentPage(page);
   };
 
-  const handleProductOpen = (id, name, image, price) => {
-    dispatch(showProductDetails([id, name, image, price]));
+  const handleProductOpen = (id) => {
+    const foundProduct = products.find((product) => product.id === id);
+    dispatch(showProductDetails(foundProduct));
   };
   return (
     <div>
@@ -43,23 +44,17 @@ const AllProducts = () => {
         <Grid container spacing={2}>
           {products.slice(firstSliceIndex, lastSliceIndex).map((product) => {
             return (
-              <Grid xs={3} item key={product.id}>
+              <Grid xs={3} item>
                 <Link
                   to={`/products/${product.id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Paper
-                    onChange={(product) =>
-                      handleProductOpen(
-                        product.id,
-                        product.name,
-                        product.img,
-                        product.price
-                      )
-                    }
+                    key={product.id}
+                    onClick={() => handleProductOpen(product.id)}
                     sx={{ padding: "10px", minHeight: "400px" }}
                     elevation={hoverItemId === product.id ? 6 : 0}
-                    onMouseEnter={(product) => elevateBox(product.id)}
+                    onMouseEnter={() => elevateBox(product.id)}
                     onMouseLeave={lowerBox}
                   >
                     <ProductDetails

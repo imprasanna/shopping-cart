@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { products } from "../../utilities/constants";
 
 const initialState = {
   carts: [],
-  productsShow: [],
+  productsShow: null,
   cartsCount: 0,
 };
 
@@ -20,14 +19,7 @@ const cartSlice = createSlice({
       state.cartsCount = state.carts.length;
     },
     showProductDetails: (state, action) => {
-      const [id, name, image, price] = action.payload;
-      state.productsShow = [
-        ...state.productsShow,
-        { id: id, name: name, img: image, price: price },
-      ];
-    },
-    getProducts: (state) => {
-      state.productsShow = products;
+      state.productsShow = action.payload;
     },
   },
 });

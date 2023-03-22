@@ -7,17 +7,16 @@ import { useParams } from "react-router-dom";
 
 const IndividaulProduct = () => {
   let { productId } = useParams();
-  let { carts } = useSelector((state) => state.carts);
-  let { products } = useSelector((state) => state.productsShow);
-  const product = products.find((product) => product.id === productId);
+  let { productsShow } = useSelector((state) => state.cart);
+  // const product = products.find((product) => product.id === productId);
 
   let dispatch = useDispatch();
 
   const handleAddToCart = (event, id, name, image, price) => {
     event.stopPropagation();
-    const productKey = carts.find((cart) => cart.id === id);
-    console.log(productKey);
-    if (productKey) {
+    // const productKey = carts.find((cart) => cart.id === id);
+    // console.log(productKey);
+    if (productsShow) {
       alert("Item already present!");
     } else {
       dispatch(addToCart([id, name, image, price]));
@@ -28,7 +27,7 @@ const IndividaulProduct = () => {
     <Wrapper>
       <Paper elevation={3} sx={{ width: "50%", padding: "2rem" }}>
         <div style={{ display: "flex" }}>
-          <img src={product.img} alt="" style={{ width: "300px" }} />
+          <img src={productsShow.img} alt="" style={{ width: "300px" }} />
           <div
             style={{
               marginLeft: "2rem",
@@ -44,7 +43,7 @@ const IndividaulProduct = () => {
                 marginBottom: "1rem",
               }}
             >
-              {product.name}
+              {productsShow.name}
             </div>
             <div
               style={{
@@ -53,17 +52,17 @@ const IndividaulProduct = () => {
                 marginBottom: "1rem",
               }}
             >
-              {product.price}
+              {productsShow.price}
             </div>
             <Button
               variant="contained"
-              onClick={(event, product) =>
+              onClick={(event, products) =>
                 handleAddToCart(
                   event,
-                  product.id,
-                  product.name,
-                  product.img,
-                  product.price
+                  products.id,
+                  products.name,
+                  products.img,
+                  products.price
                 )
               }
             >
