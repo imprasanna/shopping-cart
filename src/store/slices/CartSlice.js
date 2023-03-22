@@ -21,7 +21,10 @@ const cartSlice = createSlice({
     },
     showProductDetails: (state, action) => {
       const [id, name, image, price] = action.payload;
-      state.productsShow = { id: id, name: name, img: image, price: price };
+      state.productsShow = [
+        ...state.productsShow,
+        { id: id, name: name, img: image, price: price },
+      ];
     },
     getProducts: (state) => {
       state.productsShow = products;

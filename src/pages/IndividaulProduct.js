@@ -7,8 +7,8 @@ import { useParams } from "react-router-dom";
 
 const IndividaulProduct = () => {
   let { productId } = useParams();
-  let { carts } = useSelector((state) => state.product.carts);
-  let { products } = useSelector((state) => state.product.productsShow);
+  let { carts } = useSelector((state) => state.carts);
+  let { products } = useSelector((state) => state.productsShow);
   const product = products.find((product) => product.id === productId);
 
   let dispatch = useDispatch();
