@@ -3,20 +3,15 @@ import { Paper, Button } from "@mui/material";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/slices/CartSlice";
+import { useParams } from "react-router-dom";
 
 const IndividaulProduct = () => {
-  let { carts } = useSelector((state) => state.product.cart);
-  let { cartShow } = useSelector((state) => state.product.cart);
+  let { productId } = useParams();
+  let { carts } = useSelector((state) => state.product.carts);
+  let { products } = useSelector((state) => state.product.productsShow);
+  const product = products.find((product) => product.id === productId);
 
   let dispatch = useDispatch();
-
-  // const data = useSelector((state) => {
-  //   return state.products;
-  // });
-
-  // const findProduct = products.find((product) => product.id === productId);
-
-  // console.log(findProduct);
 
   const handleAddToCart = (event, id, name, image, price) => {
     event.stopPropagation();
@@ -29,12 +24,11 @@ const IndividaulProduct = () => {
     }
   };
 
-  // console.log(data);
   return (
     <Wrapper>
       <Paper elevation={3} sx={{ width: "50%", padding: "2rem" }}>
         <div style={{ display: "flex" }}>
-          <img src={cartShow.img} alt="" style={{ width: "300px" }} />
+          <img src={product.img} alt="" style={{ width: "300px" }} />
           <div
             style={{
               marginLeft: "2rem",
@@ -50,7 +44,7 @@ const IndividaulProduct = () => {
                 marginBottom: "1rem",
               }}
             >
-              {cartShow.name}
+              {product.name}
             </div>
             <div
               style={{
@@ -59,17 +53,17 @@ const IndividaulProduct = () => {
                 marginBottom: "1rem",
               }}
             >
-              {cartShow.price}
+              {product.price}
             </div>
             <Button
               variant="contained"
-              onClick={(event) =>
+              onClick={(event, product) =>
                 handleAddToCart(
                   event,
-                  cartShow.id,
-                  cartShow.name,
-                  cartShow.img,
-                  cartShow.price
+                  product.id,
+                  product.name,
+                  product.img,
+                  product.price
                 )
               }
             >

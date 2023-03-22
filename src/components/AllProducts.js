@@ -59,7 +59,7 @@ const AllProducts = () => {
                     }
                     sx={{ padding: "10px", minHeight: "400px" }}
                     elevation={hoverItemId === product.id ? 6 : 0}
-                    onMouseEnter={() => elevateBox(product.id)}
+                    onMouseEnter={(product) => elevateBox(product.id)}
                     onMouseLeave={lowerBox}
                   >
                     <ProductDetails
