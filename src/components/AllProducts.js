@@ -49,7 +49,7 @@ const AllProducts = () => {
                   style={{ textDecoration: "none" }}
                 >
                   <Paper
-                    onChange={() =>
+                    onChange={(product) =>
                       handleProductOpen(
                         product.id,
                         product.name,
