@@ -25,11 +25,7 @@ const IndividaulProduct = () => {
     if (productKey) {
       alert("Item already present!");
     } else {
-      dispatch(
-        addToCart((id, name, image, price) => {
-          return [id, name, image, price];
-        })
-      );
+      dispatch(addToCart([id, name, image, price]));
     }
   };
 

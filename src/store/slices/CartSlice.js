@@ -10,7 +10,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart(state, action) {
+    addToCart: (state, action) => {
       const [id, name, image, price] = action.payload;
       state.carts = [
         ...state.carts,
@@ -18,7 +18,7 @@ const cartSlice = createSlice({
       ];
       state.cartsCount = state.carts.length;
     },
-    showProductDetails(state, action) {
+    showProductDetails: (state, action) => {
       const [id, name, image, price] = action.payload;
       state.cartShow = { id: id, name: name, img: image, price: price };
     },

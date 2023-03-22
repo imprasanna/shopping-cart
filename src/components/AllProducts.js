@@ -35,11 +35,7 @@ const AllProducts = () => {
   };
 
   const handleProductOpen = (id, name, image, price) => {
-    dispatch(
-      showProductDetails((id, name, image, price) => {
-        return [id, name, image, price];
-      })
-    );
+    dispatch(showProductDetails([id, name, image, price]));
   };
   return (
     <div>
@@ -49,18 +45,18 @@ const AllProducts = () => {
             return (
               <Grid xs={3} item key={product.id}>
                 <Link
-                  onChange={() =>
-                    handleProductOpen(
-                      product.id,
-                      product.name,
-                      product.img,
-                      product.price
-                    )
-                  }
                   to={`/products/${product.id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Paper
+                    onChange={() =>
+                      handleProductOpen(
+                        product.id,
+                        product.name,
+                        product.img,
+                        product.price
+                      )
+                    }
                     sx={{ padding: "10px", minHeight: "400px" }}
                     elevation={hoverItemId === product.id ? 6 : 0}
                     onMouseEnter={() => elevateBox(product.id)}
