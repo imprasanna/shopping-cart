@@ -2,13 +2,16 @@ import React from "react";
 import { Paper, Button } from "@mui/material";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../store/slices/CartSlice";
+import { addToCart, removeFromCart } from "../store/slices/CartSlice";
 import { products } from "../utilities/constants";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import { toast } from "react-toastify";
 // import { useParams } from "react-router-dom";
 
 const IndividaulProduct = () => {
   // let { productId } = useParams();
-  let { productsShow } = useSelector((state) => state.cart);
+  let { productsShow, carts } = useSelector((state) => state.cart);
   // const product = products.find((product) => product.id === productId);
 
   let dispatch = useDispatch();
@@ -16,9 +19,27 @@ const IndividaulProduct = () => {
   const handleAddToCart = (event, id) => {
     event.stopPropagation();
     const productObj = products.find((product) => product.id === id);
-    console.log(productObj);
+    // console.log(productObj);
     dispatch(addToCart(productObj));
+    <Stack sx={{ width: "100%" }} spacing={2}>
+      <Alert variant="filled" severity="success">
+        Product added to cart!
+      </Alert>
+    </Stack>;
+    toast.success("hello");
   };
+
+  const handleRemoveFromCart = (event, id) => {
+    event.stopPropagation();
+    dispatch(removeFromCart(id));
+    <Stack sx={{ width: "100%" }} spacing={2}>
+      <Alert variant="filled" severity="error">
+        Product removed from cart!
+      </Alert>
+    </Stack>;
+  };
+
+  const findProduct = carts.find((cart) => cart.id === productsShow.id);
 
   return (
     <Wrapper>
@@ -51,12 +72,24 @@ const IndividaulProduct = () => {
             >
               {productsShow.price}
             </div>
-            <Button
-              variant="contained"
-              onClick={(event) => handleAddToCart(event, productsShow.id)}
-            >
-              Add to cart
-            </Button>
+            {findProduct ? (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={(event) =>
+                  handleRemoveFromCart(event, productsShow.id)
+                }
+              >
+                Remove from cart
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={(event) => handleAddToCart(event, productsShow.id)}
+              >
+                Add to cart
+              </Button>
+            )}
           </div>
         </div>
       </Paper>

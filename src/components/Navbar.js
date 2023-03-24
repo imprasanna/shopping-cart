@@ -6,7 +6,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { showShoppingCart } from "../store/slices/CartSlice";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -18,7 +19,12 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  let dispatch = useDispatch();
   let { cartsCount } = useSelector((state) => state.cart);
+
+  const openShoppingCart = () => {
+    dispatch(showShoppingCart());
+  };
 
   return (
     <Paper
@@ -54,11 +60,18 @@ const Navbar = () => {
       <div
         style={{ display: "flex", alignItems: "center", paddingRight: "8rem" }}
       >
-        <IconButton aria-label="cart">
-          <StyledBadge badgeContent={cartsCount} color="success">
-            <ShoppingCartIcon sx={{ fontSize: "2.5rem" }} />
-          </StyledBadge>
-        </IconButton>
+        <Link to="/cart">
+          <IconButton
+            onClick={() => {
+              openShoppingCart();
+            }}
+            aria-label="cart"
+          >
+            <StyledBadge badgeContent={cartsCount} color="success">
+              <ShoppingCartIcon sx={{ fontSize: "2.5rem" }} />
+            </StyledBadge>
+          </IconButton>
+        </Link>
         <AccountCircleIcon
           sx={{ color: "grey", fontSize: "2.5rem", marginLeft: "2.5rem" }}
         />
