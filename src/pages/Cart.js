@@ -7,9 +7,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../store/slices/CartSlice";
+import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,6 +36,8 @@ const Cart = () => {
   const dispatch = useDispatch();
   const { carts } = useSelector((state) => state.cart);
 
+  const cartsItemNumber = carts.length;
+
   const totalAmount = carts.reduce((acc, cart) => {
     return (acc += parseInt(cart.price));
   }, 0);
@@ -45,7 +48,7 @@ const Cart = () => {
 
   return (
     <>
-      {carts ? (
+      {cartsItemNumber !== 0 ? (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -87,8 +90,6 @@ const Cart = () => {
               ))}
             </TableBody>
           </Table>
-          {/* #5e4c4c */}
-
           <Table>
             <TableRow
               sx={{ background: "#5e4c4c", color: "white", fontSize: "1.3rem" }}
@@ -106,7 +107,25 @@ const Cart = () => {
           </Table>
         </TableContainer>
       ) : (
-        <div>No products added to cart!!!</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+            flexDirection: "column",
+          }}
+        >
+          <Typography variant="h4">No items added to cart!!</Typography>
+
+          <br />
+
+          <Link style={{ textDecoration: "none" }} to="/products">
+            <Button variant="contained" color="primary">
+              Return to shop
+            </Button>
+          </Link>
+        </div>
       )}
     </>
   );

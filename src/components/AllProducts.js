@@ -36,7 +36,7 @@ const AllProducts = () => {
 
   const handleProductOpen = (id) => {
     const foundProduct = products.find((product) => product.id === id);
-    console.log(foundProduct);
+    // console.log(foundProduct);
     dispatch(showProductDetails(foundProduct));
   };
   return (
