@@ -32,7 +32,7 @@ const ProductDetails = (props) => {
           alignSelf: "flex-start",
         }}
       >
-        {props.price}
+        Rs. {props.price}
       </div>
     </div>
   );

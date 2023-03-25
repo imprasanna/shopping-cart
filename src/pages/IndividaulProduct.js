@@ -6,7 +6,8 @@ import { addToCart, removeFromCart } from "../store/slices/CartSlice";
 import { products } from "../utilities/constants";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { useParams } from "react-router-dom";
 
 const IndividaulProduct = () => {
@@ -26,17 +27,13 @@ const IndividaulProduct = () => {
         Product added to cart!
       </Alert>
     </Stack>;
-    toast.success("hello");
+    toast.success("Product added to cart!", { autoClose: 2000 });
   };
 
   const handleRemoveFromCart = (event, id) => {
     event.stopPropagation();
     dispatch(removeFromCart(id));
-    <Stack sx={{ width: "100%" }} spacing={2}>
-      <Alert variant="filled" severity="error">
-        Product removed from cart!
-      </Alert>
-    </Stack>;
+    toast.error("Product removed from cart!", { autoClose: 2000 });
   };
 
   const findProduct = carts.find((cart) => cart.id === productsShow.id);
@@ -70,25 +67,31 @@ const IndividaulProduct = () => {
                 marginBottom: "1rem",
               }}
             >
-              {productsShow.price}
+              Rs. {productsShow.price}
             </div>
             {findProduct ? (
-              <Button
-                variant="contained"
-                color="success"
-                onClick={(event) =>
-                  handleRemoveFromCart(event, productsShow.id)
-                }
-              >
-                Remove from cart
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={(event) =>
+                    handleRemoveFromCart(event, productsShow.id)
+                  }
+                >
+                  Remove from cart
+                </Button>
+                <ToastContainer />
+              </div>
             ) : (
-              <Button
-                variant="contained"
-                onClick={(event) => handleAddToCart(event, productsShow.id)}
-              >
-                Add to cart
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  onClick={(event) => handleAddToCart(event, productsShow.id)}
+                >
+                  Add to cart
+                </Button>
+                <ToastContainer />
+              </div>
             )}
           </div>
         </div>

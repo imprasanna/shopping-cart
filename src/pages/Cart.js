@@ -1,58 +1,114 @@
 import React from "react";
+import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useSelector } from "react-redux";
+import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart } from "../store/slices/CartSlice";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const { carts } = useSelector((state) => state.cart);
-  console.log(carts);
+
+  const totalAmount = carts.reduce((acc, cart) => {
+    return (acc += parseInt(cart.price));
+  }, 0);
+
+  const handleRemoveProduct = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
   return (
-    <TableContainer component={Paper} sx={{ marginTop: "3rem" }}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
+    <>
+      {carts ? (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">S.N.</StyledTableCell>
+                <StyledTableCell align="center">Product</StyledTableCell>
+                <StyledTableCell align="right">Price</StyledTableCell>
+                <StyledTableCell align="right"></StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {carts.map((cart, i) => (
+                <StyledTableRow key={cart.id}>
+                  <StyledTableCell align="left">{i + 1}</StyledTableCell>
+                  <StyledTableCell
+                    sx={{ display: "flex", alignItems: "center" }}
+                    component="th"
+                    scope="row"
+                  >
+                    <img src={cart.img} alt="" width="50px" />
+                    <div style={{ marginLeft: "2rem" }}>{cart.name}</div>
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    Rs. {cart.price}
+                  </StyledTableCell>
+                  {/* <StyledTableCell align="right">{}</StyledTableCell> */}
+                  <StyledTableCell align="right">
+                    <Button
+                      onClick={() => {
+                        handleRemoveProduct(cart.id);
+                      }}
+                      variant="contained"
+                      color="success"
+                    >
+                      ×
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          {/* #5e4c4c */}
+
+          <Table>
             <TableRow
-              key={row.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              sx={{ background: "#5e4c4c", color: "white", fontSize: "1.3rem" }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <StyledTableCell align="left"></StyledTableCell>
+              <StyledTableCell align="right">Total</StyledTableCell>
+              <StyledTableCell
+                sx={{ width: "50%", paddingLeft: "1rem" }}
+                align="right"
+              >
+                Rs. {totalAmount}
+              </StyledTableCell>
+              <StyledTableCell align="right"></StyledTableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </Table>
+        </TableContainer>
+      ) : (
+        <div>No products added to cart!!!</div>
+      )}
+    </>
   );
 };
 
