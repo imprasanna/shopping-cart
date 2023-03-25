@@ -1,3 +1,3 @@
-# Getting Started with Create React App
+# Project showcase
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![project image ](./src/Assets/project-showcase.png)
