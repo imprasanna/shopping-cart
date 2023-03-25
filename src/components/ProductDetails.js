@@ -12,7 +12,7 @@ const ProductDetails = (props) => {
       <img
         src={props.image}
         alt=""
-        style={{ width: "250px", marginBottom: "1.5rem" }}
+        style={{ width: "250px", marginBottom: "1.5rem", width: "100%" }}
       />
       <div
         style={{
