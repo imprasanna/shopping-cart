@@ -33,7 +33,7 @@ const Products = () => {
         <Grid container spacing={2}>
           {products.slice(0, 8).map((product) => {
             return (
-              <Grid xs={3} item>
+              <Grid xs={3} key={product.id} item>
                 <Link
                   to={`/products/${product.id}`}
                   style={{ textDecoration: "none" }}
