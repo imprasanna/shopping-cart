@@ -6,7 +6,21 @@ import Products from "./Products";
 import { Link } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { createTheme, ThemeProvider } from "@mui/material";
+
 const ProductsSection = () => {
+  const theme = createTheme();
+
+  theme.typography.h3 = {
+    fontSize: "30px",
+    "@media (min-width:600px)": {
+      fontSize: "25px",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "30px",
+    },
+  };
+
   return (
     <div
       style={{
@@ -15,9 +29,11 @@ const ProductsSection = () => {
         flexDirection: "column",
       }}
     >
-      <Typography mt={3} variant="h3">
-        Explore Our Products
-      </Typography>
+      <ThemeProvider theme={theme}>
+        <Typography mt={3} variant="h3">
+          Explore Our Products
+        </Typography>
+      </ThemeProvider>
       <Wrapper>
         <Products />
         <Link
