@@ -42,7 +42,12 @@ const AllProducts = () => {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+        <Grid
+          container
+          // spacing={2}
+          spacing={{ xs: 6, md: 3 }}
+          columns={{ xs: 3, sm: 10, md: 12 }}
+        >
           {products.slice(firstSliceIndex, lastSliceIndex).map((product) => {
             return (
               <Grid xs={3} item>

@@ -30,10 +30,21 @@ const Products = () => {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+        <Grid
+          container
+          // spacing={2}
+          spacing={{ xs: 6, md: 3 }}
+          columns={{ xs: 3, sm: 10, md: 12 }}
+        >
           {products.slice(0, 8).map((product) => {
             return (
-              <Grid xs={3} key={product.id} item>
+              <Grid
+                key={product.id}
+                item
+                // sm={3}
+                xs={3}
+                // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
                 <Link
                   to={`/products/${product.id}`}
                   style={{ textDecoration: "none" }}
