@@ -3,7 +3,9 @@ const bcrypt = require("bcrypt");
 const Joi = require("joi"); //for form validation
 const User = require("../models/user");
 
-async function createUser(req, res) {
+// const saltRounds = 10;
+
+const createUser = async (req, res) => {
   // Check the data coming from user as request
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
@@ -22,8 +24,36 @@ async function createUser(req, res) {
     return res.status(400).send(error.details[0].message); // 400 is code status for bad request
   }
 
+  const user = await User.findOne({ email: req.body.email });
+
+  /*
+  if (user) {
+    res.send({
+      message: "User already exist !!!",
+    });
+    return;
+  }
+  bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+    if (err) {
+      res.send(err);
+    }
+    const user = new User({
+      fullname: req.body.fullname,
+      email: req.body.email,
+      password: hash,
+      userType: req.body.userType,
+    });
+    user
+      .save()
+      .then((response) => {
+        res.send(response);
+      })
+      .catch((error) => res.send(error));
+  });
+    */
+
   //  Check if user already exists or not
-  let user = await User.findOne({ email: req.body.email });
+  user = await User.findOne({ email: req.body.email });
 
   if (user) {
     return res.status(400).send("User already exists!");
@@ -49,6 +79,6 @@ async function createUser(req, res) {
 
   // Send the token with the userdetails as response to the frontend
   res.send(token);
-}
+};
 
 module.exports = { createUser };
