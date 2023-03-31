@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const Joi = require("joi"); //for form validation
 const User = require("../models/user");
 
-async function getData(req, res) {
+async function createUser(req, res) {
   // Check the data coming from user as request
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
@@ -51,4 +51,4 @@ async function getData(req, res) {
   res.send(token);
 }
 
-module.exports = { getData };
+module.exports = { createUser };

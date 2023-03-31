@@ -1,7 +1,7 @@
-const { getData } = require("../controllers/userController");
+const { createUser } = require("../controllers/userController");
 
 const userRoutes = (app) => {
-  app.post("/api/register", function getData(req, res) {
+  app.post("/api/register", function createUser(req, res) {
     console.log("RESPONSE", res.body);
   });
 };
