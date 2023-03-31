@@ -11,7 +11,9 @@ const genAuthToken = (user) => {
       name: user.name,
       email: user.email,
     },
-    secretKey
+    {
+      secretKey,
+    }
   );
 };
 
