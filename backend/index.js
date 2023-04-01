@@ -16,6 +16,7 @@ app.use(express.json());
 // app.use(bodyParser.json());
 
 const products = require("./products");
+const { loginRoutes } = require("./routes/login");
 const port = 3000;
 const uri = process.env.DB_URI;
 
@@ -37,6 +38,7 @@ app.listen(port, () => {
 });
 
 userRoutes(app);
+loginRoutes(app);
 
 async function main() {
   await mongoose.connect(uri, {

@@ -3,8 +3,6 @@ const bcrypt = require("bcrypt");
 const Joi = require("joi"); //for form validation
 const { User } = require("../models/user");
 
-// const saltRounds = 10;
-
 const createUser = async (req, res) => {
   // Check and validate the data coming from user as request
   const schema = Joi.object({
