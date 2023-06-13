@@ -17,7 +17,7 @@ app.use(express.json());
 
 const products = require("./products");
 const { loginRoutes } = require("./routes/login");
-const port = 3000;
+const port = 5000;
 const uri = process.env.DB_URI;
 
 // Database connection
