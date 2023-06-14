@@ -1,9 +1,17 @@
 import { useState } from "react";
 import logo from "../Assets/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../store/slices/authSlice";
 
 import React from "react";
 
 const Register = () => {
+  const dispatch = useDispatch();
+
+  const auth = useSelector((state) => state.auth);
+
+  console.log(auth);
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -22,9 +30,14 @@ const Register = () => {
     setUser({ ...user, password: ev.target.value });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(registerUser(user));
+  };
+
   return (
     <div>
-      <img width="150px" src={logo} />
+      <img width="150px" src={logo} alt="logo" />
       <form>
         <h2>Register</h2>
         <input
@@ -45,7 +58,7 @@ const Register = () => {
           onChange={setPassword}
         />
         <br />
-        <button>Sign Up</button>
+        <button onSubmit={handleSubmit}>Sign Up</button>
       </form>
     </div>
   );

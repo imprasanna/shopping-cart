@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { url } from "./api";
-import jwtDecode from "jwt-decode"
+import jwtDecode from "jwt-decode";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -18,7 +18,8 @@ const initialState = {
 // Action creator using redux thunk
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (user, { rejectWithValue }) => {   // user is the value
+  async (user, { rejectWithValue }) => {
+    // user is the value
     try {
       const token = await axios.post(`${url}/register`, {
         name: user.name,
@@ -28,14 +29,15 @@ export const registerUser = createAsyncThunk(
 
       localStorage.setItem("token", token.data);
 
-      return token.data;
+      console.log(token.data);
 
-    } catch(err) {
-        console.log(err);
-        return rejectWithValue(err.response.data);
+      return token.data;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue(err.response.data);
     }
   }
-)
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -46,12 +48,11 @@ const authSlice = createSlice({
   // builder -> and object provided by redux toolkit
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state, action) => {
-      return { ...state, registerStatus: "pending" }
+      return { ...state, registerStatus: "pending" };
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
       if (action.payload) {
-
-        const user = jwtDecode(action.payload)
+        const user = jwtDecode(action.payload);
 
         return {
           ...state,
@@ -60,7 +61,7 @@ const authSlice = createSlice({
           email: user.email,
           _id: user._id,
           registerStatus: "success",
-        }
+        };
       }
     });
     builder.addCase(registerUser.rejected, (state, action) => {
@@ -68,9 +69,9 @@ const authSlice = createSlice({
         ...state,
         registerStatus: "rejected",
         registerError: action.payload,
-      }
-    });  
+      };
+    });
   },
-  });
+});
 
 export default authSlice.reducer;
