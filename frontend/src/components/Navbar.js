@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Paper, TextField, Typography } from "@mui/material";
+import { Paper, TextField } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Badge from "@mui/material/Badge";
@@ -8,6 +8,7 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { showShoppingCart } from "../store/slices/CartSlice";
+import logo from "../Assets/logo.png"
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -37,20 +38,8 @@ const Navbar = () => {
         paddingLeft: "8rem",
       }}
     >
-      <Link to="/" style={{ textDecoration: "none", color: "#4ec94e" }}>
-        <Typography
-          variant="h4"
-          sx={{ fontFamily: "Arial, Helvetica, sans-serif" }}
-        >
-          <strong>Hamro </strong>
-          <span
-            style={{
-              color: "#9393da",
-            }}
-          >
-            दोकान
-          </span>
-        </Typography>
+      <Link to="/" style={{ textDecoration: "none"}}>
+        <img width="200px" src={logo} alt="hamro_dokan_logo" />
       </Link>
       <TextField
         id="demo-helper-text-aligned-no-helper"
