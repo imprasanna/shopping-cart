@@ -18,12 +18,12 @@ const initialState = {
 // Action creator using redux thunk
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (values, { rejectWithValue }) => {
+  async (user, { rejectWithValue }) => {   // user is the value
     try {
       const token = await axios.post(`${url}/register`, {
-        name: values.name,
-        email: values.email,
-        password: values.password,
+        name: user.name,
+        email: user.email,
+        password: user.password,
       });
 
       localStorage.setItem("token", token.data);
